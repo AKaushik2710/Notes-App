@@ -1,6 +1,7 @@
-import { useState } from 'react'
-// import Div from './Components/Div'
-import {Div, Para, Span} from './Components/Functionality'
+// import { useState } from 'react'
+import Div from './Components/Div'
+import Left_Container from './Components/Left_Container';
+import Right_Container from './Components/Right_Container';
 import './App.css'
 
 function App() {
@@ -8,12 +9,8 @@ function App() {
   return (
     <>
       <Div>
-        <Div>
-          <Para>
-            <Span>&#10003;</Span>
-          </Para>
-        </Div>
-        <Div></Div>
+        <Left_Container />
+        <Right_Container />
       </Div>
     </>
   )
