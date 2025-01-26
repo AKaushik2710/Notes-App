@@ -1,12 +1,12 @@
 
 function Input(props){
-    const {cn, children} = props;
-    return <input className={cn} maxLength={20}>{children}</input>
+    const {cn} = props;
+    return <input className={cn} maxLength={20}></input>
 }
 
 function Text(props){
-    const {cn, children} = props;
-    return <textarea className={cn} maxLength={1500}>{children}</textarea>
+    const {cn} = props;
+    return <textarea className={cn} maxLength={1500}></textarea>
 }
 
 export {Input, Text}
