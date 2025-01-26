@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <Div>
+      <Div id="parent" >
         <Left_Container />
         <Right_Container />
       </Div>
