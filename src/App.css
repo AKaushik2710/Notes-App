@@ -95,3 +95,11 @@
     border-radius: 50px;
 
 }
+
+#note_creator{
+    position: relative;
+}
+#file_maker{
+    position: absolute;
+    top: -3dvh;
+}
