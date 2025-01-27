@@ -7,6 +7,10 @@ import { useReducer, useState } from "react";
 
 function reducer(state, action){
     switch (action.type){
+        case "maker" :
+            console.log(action.handle)
+            action.handle()
+            return [];
         case "delete" :
             return [];
         case "change" : 
@@ -17,11 +21,25 @@ function reducer(state, action){
     }
 }
 
-function Functionality(){
-    const [isHovered, setIsHovered] = useState(false);
+function useFunctionality(){
+    const [isChanging, setIsChanging] = useState({hover : false, r_empty : false});
     const [noteList, dispatch] = useReducer(reducer, []);
-    return {isHovered, setIsHovered, noteList, dispatch}
 
+    function handleChanging(enter=false, maker=false){
+        if(!maker && !maker){
+            enter ? setIsChanging({...isChanging, hover : true}) : setIsChanging({...isChanging, hover : false});
+        }
+        else{
+            enter ? setIsChanging({...isChanging, hover : true}) : setIsChanging({...isChanging, hover : false});
+            dispatch({type : "maker", handle : handleEmptiness});
+        }
+    }
+
+    function handleEmptiness(){
+        setIsChanging({...isChanging, r_empty : true})
+        console.log("ter")
+    }
+    return {isChanging, handleChanging, noteList, dispatch, handleEmptiness}
 }
 
-export {Div, Para, Span, Input, Text, Functionality}
+export {Div, Para, Span, Input, Text, useFunctionality};
