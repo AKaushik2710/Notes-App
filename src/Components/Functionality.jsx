@@ -35,9 +35,8 @@ function useFunctionality(){
         }
     }
 
-    function handleEmptiness(){
-        setIsChanging({...isChanging, r_empty : true})
-        console.log("ter")
+    function handleEmptiness(save=false){
+        !save ? setIsChanging({...isChanging, r_empty : true}) : setIsChanging({...isChanging, r_empty : false})
     }
     return {isChanging, handleChanging, noteList, dispatch, handleEmptiness}
 }
