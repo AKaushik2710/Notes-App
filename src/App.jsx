@@ -6,8 +6,8 @@ import { useFunctionality } from './Components/Functionality';
 import './App.css'
 
 function App() {
-  const {isChanging, handleChanging, noteList, dispatch} = useFunctionality();
-  const functionality = [isChanging, handleChanging, noteList, dispatch];
+  const {isChanging, handleChanging, noteList, dispatch, handleEmptiness} = useFunctionality();
+  const functionality = [isChanging, handleChanging, noteList, dispatch, handleEmptiness];
   return (
     <>
       <Div id="parent" cn="parent" >

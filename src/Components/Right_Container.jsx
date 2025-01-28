@@ -8,7 +8,7 @@ export default function Right_Container({functionality}){
             {console.log("Rendering")}
             {(isChanging.r_empty) ? (<><Div id="inp_mod" cn="inp_mod">
                 <Input cn="inp"></Input>
-                <Span id="saver" clickHandler={()=> handleEmptiness(true)} >&#10003;</Span>
+                <Span id="saver" clickHandler={() => handleEmptiness(true)} >&#10003;</Span>
             </Div>
             <Div id="text_mod" cn="text_mod">
                 <Text cn="text" />
