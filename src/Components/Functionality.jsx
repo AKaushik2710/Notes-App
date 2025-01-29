@@ -3,7 +3,7 @@ import Div from "./Div";
 import Para from "./Para";
 import Span from "./Span";
 import { Input, Text } from "./Modifier";
-import { useReducer, useState } from "react";
+import { useReducer, useState, useRef } from "react";
 
 function reducer(state, action){
     switch (action.type){
@@ -14,7 +14,7 @@ function reducer(state, action){
         case "delete" :
             return [];
         case "change" : 
-            return [];
+            return console.log([...state,action.values]);
         default : {
             throw new Error("Something is Wrong!!!");
         }
@@ -24,6 +24,8 @@ function reducer(state, action){
 function useFunctionality(){
     const [isChanging, setIsChanging] = useState({hover : false, r_empty : false});
     const [noteList, dispatch] = useReducer(reducer, []);
+    const inputRef = useRef('');
+    const textRef = useRef('');
 
     function handleChanging(enter=false, maker=false){
         if(!maker && !maker){
@@ -35,10 +37,16 @@ function useFunctionality(){
         }
     }
 
-    function handleEmptiness(save=false){
-        !save ? setIsChanging({...isChanging, r_empty : true}) : setIsChanging({...isChanging, r_empty : false});
+    function handleEmptiness(save=false, values){
+        if(!save){
+            setIsChanging({...isChanging, r_empty : true});
+        }
+        else{
+            setIsChanging({...isChanging, r_empty : false});
+            dispatch({type : "change", values : values})
+        }
     }
-    return {isChanging, handleChanging, noteList, dispatch, handleEmptiness}
+    return {isChanging, handleChanging, noteList, dispatch, handleEmptiness, inputRef, textRef}
 }
 
 export {Div, Para, Span, Input, Text, useFunctionality};

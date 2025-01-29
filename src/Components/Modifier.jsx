@@ -1,12 +1,12 @@
 
 function Input(props){
-    const {cn} = props;
-    return <input className={cn} maxLength={20}></input>
+    const {cn, myRef} = props;
+    return <input className={cn} ref={myRef} onChange={(e)=> myRef.current.value= e.target.value} maxLength={20}></input>
 }
 
 function Text(props){
-    const {cn} = props;
-    return <textarea className={cn} maxLength={1500}></textarea>
+    const {cn, myRef} = props;
+    return <textarea className={cn} onChange={(e)=> myRef.current.value= e.target.value} ref={myRef} maxLength={1500}></textarea>
 }
 
 export {Input, Text}
