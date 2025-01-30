@@ -47,8 +47,25 @@ function useFunctionality(){
             return result;
         }
         let prev = isEmpty();
-        const na = arr.length ===0 ? 1 : arr[arr.length-1].id+1
+        const na = arr.length ===0 ? 1 : arr[arr.length-1].id+1 ;
         return Object.is(prev,NaN) ? na : prev+=1
+    }
+
+    function paraGenerator(inp, txt){
+        let para ;
+                switch(true){
+                    case (inp && txt !== '' ) :
+                        para = inp.slice(0,10);
+                    break;
+                    case ((inp || txt) !== '' ) :
+                        para = inp !== '' ? inp.slice(0,10) : txt.slice(0,10);
+                    break;
+                    default : 
+                        para = null;
+                    break;
+                }
+                console.log(para,inp,txt)
+                return para ;
     }
 
     function handleEmptiness(save=false, values){
@@ -60,7 +77,9 @@ function useFunctionality(){
             if(isChanging.add){
                 console.log(noteList);
                 const id_num = idGenerator();
-                dispatch({type : "maker", values : {id : id_num, input : inputRef.current.value, text: textRef.current.value}})
+                const  para = paraGenerator(inputRef.current.value, textRef.current.value);
+                console.log(para)
+                para !== null ? dispatch({type : "maker", values : {id : id_num, input : inputRef.current.value, text: textRef.current.value, para : para}}) : console.log(null)
             }else{
                 dispatch({type : "change", values : values})
             }

@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import {Div, Para, Span, useFunctionality} from './Functionality';
+
 
 export default function Left_Container({functionality}){
     const [isChanging, handleChanging, noteList, dispatch] = functionality;
@@ -13,7 +15,11 @@ export default function Left_Container({functionality}){
                     <Span id="folder_maker" clickHandler={()=>handleChanging(false)} handleChanging={handleChanging}>{"New Folder"}</Span>
                 </Div>) : null}
             </Div>
-            <Div id="displayer" cn="displayer"></Div>
+            <Div id="displayer" cn="displayer">
+                {noteList.map(note=>{
+                    return <><Para>{note.para}</Para></>
+                })}
+            </Div>
         </Div>
         </>
     )
