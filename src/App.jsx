@@ -6,8 +6,16 @@ import { useFunctionality } from './Components/Functionality';
 import './App.css'
 
 function App() {
-  const {isChanging, handleChanging, noteList, dispatch, handleEmptiness, inputRef, textRef} = useFunctionality();
-  const functionality = [isChanging, handleChanging, noteList, dispatch, handleEmptiness, inputRef, textRef];
+  /*
+    isChanging => HOVER SPECIFYING OBJECT
+    handleChanging => HOVER MANIPULATION FUNCTION
+    noteList => LIST OF NOTES BEING ADDED
+    handleEmptiness => DISPLAY CHANGING FUNCTION OF RIGHT DIV CHILDREN
+    inputRef => REF FOR INPUT FIELD
+    textRef => REF FOR TEXTAREA
+    */
+  const {isChanging, handleChanging, noteList, handleEmptiness, inputRef, textRef} = useFunctionality();
+  const functionality = [isChanging, handleChanging, noteList, handleEmptiness, inputRef, textRef];
   return (
     <>
       <Div id="parent" cn="parent" >

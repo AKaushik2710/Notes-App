@@ -96,9 +96,12 @@
 
 }
 
+/* Note Creation Pen */
 #note_creator{
     position: relative;
 }
+
+/* File Creation Option */
 #file_maker{
     position: absolute;
     top: -3dvh;

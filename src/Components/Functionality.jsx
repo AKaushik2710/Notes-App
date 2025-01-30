@@ -5,10 +5,9 @@ import Span from "./Span";
 import { Input, Text } from "./Modifier";
 import { useReducer, useState, useRef } from "react";
 
-function reducer(noteList, action){
+function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
     switch (action.type){
         case "maker" :
-            console.log([...noteList, action.values]);
             return [...noteList, action.values];
         case "delete" :
             return [];
@@ -21,23 +20,23 @@ function reducer(noteList, action){
 }
 
 function useFunctionality(){
-    const initialArr = [];
-    const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false});
-    const [noteList, dispatch] = useReducer(reducer, initialArr);
-    const inputRef = useRef('');
-    const textRef = useRef('');
+    const initialArr = []; // INITIAL ARRAY BEING ASSIGNED TO REDUCER HOOK
+    const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
+    const [noteList, dispatch] = useReducer(reducer, initialArr); // REDUCER HOOK FOR ADDITION, CHANGE & DELETION OF NOTES
+    const inputRef = useRef(''); // REF FOR INPUT FIELD
+    const textRef = useRef(''); // REF FOR TEXT AREA
 
-    function handleChanging(enter=false, maker=false){
-        if(!maker){
+    function handleChanging(enter=false, maker=false){ // HOVER FUNCTIONALITY CHANGER
+        if(!maker){ // FOR HOVER ONLY
             enter ? setIsChanging({...isChanging, hover : true}) : setIsChanging({...isChanging, hover : false});
         }
-        else{
+        else{ // FOR CREATION
             setIsChanging({...isChanging, hover : false});
             handleEmptiness();
         }
     }
 
-    function idGenerator(){
+    function idGenerator(){ // NOTE'S ID GENERATOR
         const arr = [...noteList];
         function isEmpty(){
             let result = '';
@@ -51,7 +50,7 @@ function useFunctionality(){
         return Object.is(prev,NaN) ? na : prev+=1
     }
 
-    function paraGenerator(inp, txt){
+    function paraGenerator(inp, txt){ // GENERATING NOTES ENTRY FOR DISPLAY
         let para ;
                 switch(true){
                     case (inp && txt !== '' ) :
@@ -68,19 +67,19 @@ function useFunctionality(){
                 return para ;
     }
 
-    function handleEmptiness(save=false, values){
-        if(!save){
+    function handleEmptiness(save=false, values){ // RIGHT CONT'S CHILDREN DISPLAY CHANGER
+        if(!save){ // FOR DISPLAY
             setIsChanging({...isChanging, r_empty : true, add : true});
         }
-        else{
+        else{ // FOR ADDITION UPON SAVE CLICKING
             setIsChanging({...isChanging, r_empty : false, add : false});
-            if(isChanging.add){
+            if(isChanging.add){ // NEW NOTE ADDITION 
                 console.log(noteList);
                 const id_num = idGenerator();
                 const  para = paraGenerator(inputRef.current.value, textRef.current.value);
                 console.log(para)
                 para !== null ? dispatch({type : "maker", values : {id : id_num, input : inputRef.current.value, text: textRef.current.value, para : para}}) : console.log(null)
-            }else{
+            }else{ // PREVIOUS NOTE CHANGE
                 dispatch({type : "change", values : values})
             }
         }

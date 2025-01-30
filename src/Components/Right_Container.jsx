@@ -1,7 +1,13 @@
 import {Div, Input, Text, Span} from './Functionality';
 
 export default function Right_Container({functionality}){
-    const [isChanging, handleChanging, noteList, dispatch, handleEmptiness,inputRef, textRef] = functionality;
+    /*
+    isChanging => HOVER SPECIFYING OBJECT
+    handleEmptiness => DISPLAY CHANGING FUNCTION OF RIGHT DIV CHILDREN
+    inputRef => REF FOR INPUT FIELD
+    textRef => REF FOR TEXTAREA
+    */
+    const [isChanging, handleEmptiness,inputRef, textRef] = functionality;
     return (
         <>
         <Div id="r_cont" cn="r_cont">
