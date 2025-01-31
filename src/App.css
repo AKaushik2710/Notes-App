@@ -106,3 +106,23 @@
     position: absolute;
     top: -3dvh;
 }
+
+.note{
+    padding: 5px;
+    font-size: 1.3rem;
+    position: relative;
+}
+
+.note:hover{
+    box-shadow: 2px 5px 10px red;
+}
+.dustbin{
+    position: absolute;
+    right: 2.5dvw;
+    font-weight: 700;
+    color: red;
+}
+.dustbin:hover{
+    border-radius: 50%;
+    text-shadow: 3px 2px 10px red;
+}

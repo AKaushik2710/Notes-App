@@ -20,7 +20,7 @@ export default function Left_Container({functionality}){
             </Div>
             <Div id="displayer" cn="displayer"> {/* Notes Displaying Div */}
                 {noteList.map(note=>{
-                    return <><Para clickHandler={()=>handleEmptiness(true,note)} id={"p"+note.id}>{note.para}</Para><Span clickHandler={()=>handleDeletion(note.id)}><b style={{color : "red", fontSize : "2rem" }}>&#128465;</b></Span></>
+                    return <><Para cn="note" clickHandler={()=>handleEmptiness(true,note)} id={"p"+note.id}>{note.para}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleDeletion(note.id);}}>&#128465;</Span></Para></>
                 })}
             </Div>
         </Div>
