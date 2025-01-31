@@ -14,8 +14,8 @@ function App() {
     inputRef => REF FOR INPUT FIELD
     textRef => REF FOR TEXTAREA
     */
-  const {isChanging, handleChanging, noteList, handleEmptiness, inputRef, textRef} = useFunctionality();
-  const functionality = [isChanging, handleChanging, noteList, handleEmptiness, inputRef, textRef];
+  const {isChanging, handleChanging, noteList, handleEmptiness,handleDeletion, inputRef, textRef} = useFunctionality();
+  const functionality = {isChanging, handleChanging, noteList,handleDeletion, handleEmptiness, inputRef, textRef};
   return (
     <>
       <Div id="parent" cn="parent" >

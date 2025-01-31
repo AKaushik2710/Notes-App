@@ -7,7 +7,7 @@ export default function Right_Container({functionality}){
     inputRef => REF FOR INPUT FIELD
     textRef => REF FOR TEXTAREA
     */
-    const [isChanging, handleEmptiness,inputRef, textRef] = functionality;
+    const {isChanging, handleEmptiness,inputRef, textRef} = functionality;
     return (
         <>
         <Div id="r_cont" cn="r_cont">

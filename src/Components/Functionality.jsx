@@ -10,7 +10,8 @@ function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
         case "maker" :
             return [...noteList, action.values];
         case "delete" :
-            return [];
+            // const newState = 
+            return noteList.filter(note=> note.id !== action.taskId);
         case "change" : 
             return console.log([...noteList,action.values, "change"]);
         default : {
@@ -84,7 +85,11 @@ function useFunctionality(){
             }
         }
     }
-    return {isChanging, handleChanging, noteList, dispatch, handleEmptiness, inputRef, textRef}
+    function handleDeletion(taskId){
+        console.log(taskId)
+        dispatch({type : "delete", taskId : taskId});
+    }
+    return {isChanging, handleChanging, noteList, dispatch, handleEmptiness, handleDeletion, inputRef, textRef}
 }
 
 export {Div, Para, Span, Input, Text, useFunctionality};
