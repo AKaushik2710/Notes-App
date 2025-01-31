@@ -6,7 +6,7 @@ export default function Left_Container({functionality}){
     handleChanging => HOVER MANIPULATION FUNCTION
     noteList => LIST OF NOTES BEING ADDED
     */
-    const {isChanging, handleChanging, noteList, handleDeletion } = functionality;
+    const {isChanging, handleChanging, noteList, handleDeletion, handleEmptiness } = functionality;
     return (
         <>
         <Div id="l_cont" cn="l_cont"> {/* Left Container */}
@@ -20,7 +20,7 @@ export default function Left_Container({functionality}){
             </Div>
             <Div id="displayer" cn="displayer"> {/* Notes Displaying Div */}
                 {noteList.map(note=>{
-                    return <><Para id={"p"+note.id}>{note.para}<Span clickHandler={()=>handleDeletion(note.id)}><b style={{color : "red", fontSize : "2rem" }}>&#128465;</b></Span></Para></>
+                    return <><Para clickHandler={()=>handleEmptiness(true,note)} id={"p"+note.id}>{note.para}<Span clickHandler={()=>handleDeletion(note.id)}><b style={{color : "red", fontSize : "2rem" }}>&#128465;</b></Span></Para></>
                 })}
             </Div>
         </Div>
