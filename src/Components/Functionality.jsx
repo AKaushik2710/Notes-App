@@ -4,7 +4,6 @@ import Para from "./Para";
 import Span from "./Span";
 import { Input, Text } from "./Modifier";
 import { useReducer, useState, useRef, useEffect } from "react";
-// import { resolve } from "path";
 
 function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
     switch (action.type){
@@ -15,12 +14,13 @@ function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
             return noteList.filter(note=> note.id !== action.taskId);
         case "change" : 
         noteList.map(note => {
-            if(note.id === action.values.id){
-                // action.refSetter(note.input, note.text)
-                // action.inp.current.value = 
-                // console.log("Hey")
+            if(note.id === action.values.id && action.para !== null){
+                note.input = action.values.input;
+                note.text = action.values.text;
+                note.para = action.values.para;
             }
         })
+        console.log(noteList);
             return noteList;
         default : {
             throw new Error("Something is Wrong!!!");
@@ -30,29 +30,17 @@ function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
 
 function useFunctionality(){
     const initialArr = []; // INITIAL ARRAY BEING ASSIGNED TO REDUCER HOOK
-    const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :''}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
+    const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :'', id : null}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
     const [noteList, dispatch] = useReducer(reducer, initialArr); // REDUCER HOOK FOR ADDITION, CHANGE & DELETION OF NOTES
     const inputRef = useRef(''); // REF FOR INPUT FIELD
     const textRef = useRef(''); // REF FOR TEXT AREA
     // let vg;
     useEffect(()=>{
-        const Prom = new Promise((resolve, reject )=>{
-            if(isChanging.change){
-                resolve("Hello");
-                // inputRef.current.value = values.input;
-                // textRef.current.value = values.text;
-            }
-        })
-        Prom.then((msg)=>{
+        if(isChanging.change.val){
             inputRef.current.value = isChanging.change.inp;
             textRef.current.value = isChanging.change.txt;
-            console.log(msg)
-        })
+        }
     }, [isChanging.change])
-
-    // function updateRefs(inp, txt){
-    //     inputRef
-    // }
 
     function handleChanging(enter=false, maker=false){ // HOVER FUNCTIONALITY CHANGER
         if(!maker){ // FOR HOVER ONLY
@@ -108,8 +96,15 @@ function useFunctionality(){
                 const  para = paraGenerator(inputRef.current.value, textRef.current.value);
                 para !== null ? dispatch({type : "maker", values : {id : id_num, input : inputRef.current.value, text: textRef.current.value, para : para}}) : console.log(null)
             }else{ // PREVIOUS NOTE CHANGE
-                setIsChanging({...isChanging, r_empty : true, change : {inp : values.input, txt : values.text, val : true }})
-                vg = {inp:values.input, txt :values.text};
+                if(!isChanging.change.val){
+                    setIsChanging({...isChanging, r_empty : true, change : {inp : values.input, txt : values.text, val : true, id : values.id}});
+                }
+                else{
+                    setIsChanging({...isChanging, r_empty : false, change : {inp : '', txt : '', val : false, id : null}});
+                    const  para = paraGenerator(inputRef.current.value, textRef.current.value);
+                // para !== null ? dispatch({type : "maker", values : {id : id_num, input : inputRef.current.value, text: textRef.current.value, para : para}}) : console.log(null)
+                    dispatch({type : "change", values : {id : isChanging.change.id, input : inputRef.current.value, text : textRef.current.value, para : para}});
+                }
                 // dispatch({type : "change", values : values, inp : inputRef, txt : textRef})
                 // function refSetter(inp,txt){
                 //     console.log(inp,txt);
