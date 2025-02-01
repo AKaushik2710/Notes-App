@@ -25,12 +25,45 @@
 #presenter{
     flex: 15%;
     font-size: 2rem;
+    display: flex;
+    padding-left: 1.5dvw;
+    position: relative;
 }
 
+#hamburger{
+    margin-right: 1.5dvw;
+}
+
+#note_maker{
+    position: absolute;
+    right: 1.5dvw;
+    transform: rotate(90deg);
+}
 /* Notes List */
 #displayer{
     flex: 85%;
     border: 2px solid purple;
+    overflow-y : scroll;
+}
+
+/* Textbox Scrollbar */
+#displayer::-webkit-scrollbar{
+    width: 5px;
+}
+
+/* Textbox Scrollbar-Track */
+#displayer::-webkit-scrollbar-track{
+    /* fill: green; */
+    background-color: black;
+    border-radius: 50px;
+    padding: 5px;
+}
+
+/* Textbox Scrollbar-Thumb */
+#displayer::-webkit-scrollbar-thumb{
+    background-color: aqua;
+    border-radius: 50px;
+    border: 1px solid black;
 }
 
 /* Right Container */
@@ -98,14 +131,43 @@
 
 /* Note Creation Pen */
 #note_creator{
-    position: relative;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 3.5dvw;
+    bottom: 0.2dvh;
+    font-size: 0.7rem;
+    box-shadow: 1px 1px 5px black;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+hr{
+    /* color: black; */
+    border: 1px solid black;
+}
+#file_maker, #folder_maker{
+    /* border: 1px solid black; */
+    padding: 0.2rem 0.4rem;
+    /* border-radius: 10px; */
+}
+#file_maker{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+#folder_maker{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+#file_maker:hover, #folder_maker:hover{
+    box-shadow: 2px 1px 5px black;
 }
 
 /* File Creation Option */
-#file_maker{
+/* #file_maker{
     position: absolute;
     top: -3dvh;
-}
+} */
 
 .note{
     padding: 5px;

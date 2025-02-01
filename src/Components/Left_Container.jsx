@@ -11,11 +11,12 @@ export default function Left_Container({functionality}){
         <>
         <Div id="l_cont" cn="l_cont"> {/* Left Container */}
             <Div id="presenter"> {/* Creation DIV */}
-                <Para>{}</Para>
+                <Para id="hamburger">&#9776;</Para>
                 <Para>{"Notes"}</Para>{/* Note Annoter */}
                 <Span id="note_maker" handleChanging={handleChanging} >&#9998;</Span> {/* Note Making Pen */}
-                {isChanging.hover ? (<Div id="note_creator" cn="note_creator">
+                {isChanging.hover ? (<Div id="note_creator" cn="note_creator" handleChanging={handleChanging}>
                     <Span id="file_maker" clickHandler={()=>handleChanging(false, true)} handleChanging={handleChanging}>{"New File"}</Span>
+                    <hr></hr>
                     <Span id="folder_maker" clickHandler={()=>handleChanging(false)} handleChanging={handleChanging}>{"New Folder"}</Span>
                 </Div>) : null} {/* Displaying File Creator & Folder Creator Option */}
             </Div>
