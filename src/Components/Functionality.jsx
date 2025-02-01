@@ -10,7 +10,6 @@ function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
         case "maker" :
             return [...noteList, action.values];
         case "delete" :
-            // const newState = 
             return noteList.filter(note=> note.id !== action.taskId);
         case "change" : 
         noteList.map(note => {
@@ -30,7 +29,8 @@ function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
 
 function useFunctionality(){
     const initialArr = []; // INITIAL ARRAY BEING ASSIGNED TO REDUCER HOOK
-    const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :'', id : null}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
+    const [folder, setFolder] = useState([])
+    const [isChanging, setIsChanging] = useState({files : true, hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :'', id : null}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
     const [noteList, dispatch] = useReducer(reducer, initialArr); // REDUCER HOOK FOR ADDITION, CHANGE & DELETION OF NOTES
     const inputRef = useRef(''); // REF FOR INPUT FIELD
     const textRef = useRef(''); // REF FOR TEXT AREA
@@ -52,8 +52,8 @@ function useFunctionality(){
         }
     }
 
-    function idGenerator(){ // NOTE'S ID GENERATOR
-        const arr = [...noteList];
+    function idGenerator(notes){ // NOTE'S ID GENERATOR
+        const arr = [...notes];
         function isEmpty(){
             let result = '';
             for(let r=0; r<=arr.length; r++){
@@ -92,7 +92,7 @@ function useFunctionality(){
             if(isChanging.add){ // NEW NOTE ADDITION 
                 setIsChanging({...isChanging, r_empty : false, add : false});
                 console.log(noteList);
-                const id_num = idGenerator();
+                const id_num = idGenerator(noteList);
                 const  para = paraGenerator(inputRef.current.value, textRef.current.value);
                 para !== null ? dispatch({type : "maker", values : {id : id_num, input : inputRef.current.value, text: textRef.current.value, para : para}}) : console.log(null)
             }else{ // PREVIOUS NOTE CHANGE
@@ -102,23 +102,21 @@ function useFunctionality(){
                 else{
                     setIsChanging({...isChanging, r_empty : false, change : {inp : '', txt : '', val : false, id : null}});
                     const  para = paraGenerator(inputRef.current.value, textRef.current.value);
-                // para !== null ? dispatch({type : "maker", values : {id : id_num, input : inputRef.current.value, text: textRef.current.value, para : para}}) : console.log(null)
                     dispatch({type : "change", values : {id : isChanging.change.id, input : inputRef.current.value, text : textRef.current.value, para : para}});
                 }
-                // dispatch({type : "change", values : values, inp : inputRef, txt : textRef})
-                // function refSetter(inp,txt){
-                //     console.log(inp,txt);
-                //     // if(inputRef.current){
-                //         inputRef.current.value = inp;
-                //     // }
-                //     textRef.current.value = txt;
-                // }
             }
         }
     }
+
     function handleDeletion(taskId){
-        console.log(taskId)
+        if(taskId === isChanging.change.id){
+            setIsChanging({...isChanging, r_empty : false, change : {inp : '', txt : '', val : false, id : null}});
+        }
         dispatch({type : "delete", taskId : taskId});
+    }
+
+    function handleFolders(){
+        
     }
     return {isChanging, handleChanging, noteList, dispatch, handleEmptiness, handleDeletion, inputRef, textRef}
 }

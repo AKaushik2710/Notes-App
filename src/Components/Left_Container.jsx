@@ -11,6 +11,7 @@ export default function Left_Container({functionality}){
         <>
         <Div id="l_cont" cn="l_cont"> {/* Left Container */}
             <Div id="presenter"> {/* Creation DIV */}
+                <Para>{}</Para>
                 <Para>{"Notes"}</Para>{/* Note Annoter */}
                 <Span id="note_maker" handleChanging={handleChanging} >&#9998;</Span> {/* Note Making Pen */}
                 {isChanging.hover ? (<Div id="note_creator" cn="note_creator">
