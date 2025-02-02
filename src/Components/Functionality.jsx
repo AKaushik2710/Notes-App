@@ -27,9 +27,16 @@ function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
     }
 }
 
+function reducerFolder(folders, action){
+    switch(action.type){
+        case "add" :
+            return [...folders, action.values]
+    }
+}
 function useFunctionality(){
     const initialArr = []; // INITIAL ARRAY BEING ASSIGNED TO REDUCER HOOK
-    const [choices, setChoices] = useState({files : true, folders : false, choice : false})
+    const [choices, setChoices] = useState({files : true, folders : false, choice : false});
+    const [folders, dispatchFolders] = useReducer(reducerFolder, initialArr);
     const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :'', id : null}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
     const [noteList, dispatch] = useReducer(reducer, initialArr); // REDUCER HOOK FOR ADDITION, CHANGE & DELETION OF NOTES
     const inputRef = useRef(''); // REF FOR INPUT FIELD
@@ -116,23 +123,18 @@ function useFunctionality(){
         }
         dispatch({type : "delete", taskId : taskId});
     }
-
-    // function handleChoices(val=true, files=true){
-    //     if(files){
-    //         setChoices({...choices, files : true})
-    //     }
-    //     else{
-    //         setChoices({...choices, files : false})
-    //         console.log(choices.files)
-    //     }
-    //     // files ? setChoices({...choices, files : true}) : (setChoices({...choices, files : false}))
-    //     if(!val){
-    //         setChoices({...choices, choice : false})
-    //     }
-    //     else{
-    //         setChoices({...choices, choice : !choices.choice})
-    //     }
-    // }
+    
+    function handleFolderDisplay(save=false, maker=false){
+        if(!save){
+            setIsChanging({...isChanging, r_empty : true});
+        }
+        else{
+            setIsChanging({...isChanging, r_empty : false});
+            const idFold = idGenerator(folders);
+            const para = paraGenerator(inputRef.current.value, '');
+            dispatchFolders({type : "add", values : {id : "fold"+idFold, para : para}});
+        }
+    }
     function handleChoices(choiceVal = true, files) {
         setChoices(prevChoices => ({
             ...prevChoices,
@@ -141,7 +143,7 @@ function useFunctionality(){
         }));
     }
     
-    return {isChanging, choices, handleChanging, noteList, dispatch, handleEmptiness, handleDeletion, handleChoices, inputRef, textRef}
+    return {isChanging, choices, inputRef, textRef, noteList, folders, handleChanging, dispatch, handleEmptiness, handleDeletion, handleChoices, handleFolderDisplay}
 }
 
 export {Div, Para, Span, Input, Text, useFunctionality};

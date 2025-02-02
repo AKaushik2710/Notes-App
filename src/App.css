@@ -84,7 +84,7 @@
 }
 
 /* Input DIV CSS */
-#inp_mod{
+.inp_mod{
     flex: 20%;
     margin: 1rem;
     border: 3px solid pink;
@@ -100,7 +100,7 @@
 }
 
 /* Textbox DIV CSS */
-#text_mod{
+.text_mod{
     flex: 80%;
     margin: 5px;
     outline: 5px solid black;

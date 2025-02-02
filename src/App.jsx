@@ -15,8 +15,8 @@ function App() {
     inputRef => REF FOR INPUT FIELD
     textRef => REF FOR TEXTAREA
     */
-  const {isChanging, choices, noteList, inputRef, textRef, handleChanging, handleEmptiness,handleDeletion, handleChoices} = useFunctionality();
-  const functionality = {isChanging, choices, handleChanging, noteList,handleDeletion, handleEmptiness, handleChoices, inputRef, textRef};
+  const functionality = useFunctionality();
+  const {choices, handleChoices} = functionality;
   return (
     <>
       <Div id="parent" cn="parent" clickHandler={()=>handleChoices(false, choices.files)} >
