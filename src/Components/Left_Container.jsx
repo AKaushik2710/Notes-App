@@ -6,7 +6,7 @@ export default function Left_Container({functionality}){
     handleChanging => HOVER MANIPULATION FUNCTION
     noteList => LIST OF NOTES BEING ADDED
     */
-    const {isChanging,choices, noteList, folders, handleChanging, handleChoices, handleDeletion, handleEmptiness, handleFolderDisplay} = functionality;
+    const {isChanging,choices, noteList, folders, handleChanging, handleChoices, handleDeletion, handleEmptiness, handleFolderDisplay, handleFolderDeletion} = functionality;
     return (
         <>
         <Div id="l_cont" cn="l_cont"> {/* Left Container */}
@@ -15,7 +15,7 @@ export default function Left_Container({functionality}){
                     e.stopPropagation();
                     handleChoices(true,choices.files);
                     }
-                }>&#9776;</Para>
+                }>&#9776;</Para> {/* Opening Swapper For Folders */}
                 <Para>{choices.files ? "Notes" : "Folders"}</Para>{/* Note Annoter */}
                 <Span id="note_maker" clickHandler={()=> choices.files ? handleChanging(true) : handleFolderDisplay()} handleChanging={handleChanging} >&#9998;</Span> {/* Note Making Pen */}
                 {choices.files ? (isChanging.hover ? (<Div id="note_creator" cn="note_creator" handleChanging={handleChanging}>
@@ -26,9 +26,9 @@ export default function Left_Container({functionality}){
             </Div>
             <Div id="displayer" cn="displayer"> {/* Notes Displaying Div */}
                 {choices.files ? (noteList.map(note=>{
-                    return <><Para cn="note" clickHandler={()=>handleEmptiness(true,note)} id={"p"+note.id}>{note.para}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleDeletion(note.id);}}>&#128465;</Span></Para></>
+                    return <><Para cn="note" clickHandler={()=>handleEmptiness(true,note)} id={"p"+note.id}>{note.para}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleDeletion(note.id);}}>&#128465;</Span></Para></> // Notes Display
                 })) : (folders.map(folder => {
-                    return <><Para cn="folder" id={folder.id}>{folder.para}</Para></>
+                    return <><Para cn="note" id={folder.id}>{folder.para}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleFolderDeletion(folder.id);}}>&#128465;</Span></Para></> // Folders Display 
                 }))}
             </Div>
         </Div>

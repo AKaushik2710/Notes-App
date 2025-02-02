@@ -16,11 +16,11 @@ function App() {
     textRef => REF FOR TEXTAREA
     */
   const functionality = useFunctionality();
-  const {choices, handleChoices} = functionality;
+  const {choices, handleChoices} = functionality; // Destructuring Required Functionalities Only
   return (
     <>
       <Div id="parent" cn="parent" clickHandler={()=>handleChoices(false, choices.files)} >
-        {choices.choice ? <Chooser functionality={functionality}></Chooser> : null}
+        {choices.choice ? <Chooser functionality={functionality}></Chooser> : null} {/* Displaying Swapper */}
         <Left_Container functionality={functionality} />
         <Right_Container functionality={functionality} />
       </Div>
