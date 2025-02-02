@@ -4,6 +4,7 @@ import Left_Container from './Components/Left_Container';
 import Right_Container from './Components/Right_Container';
 import { useFunctionality } from './Components/Functionality';
 import './App.css'
+import Chooser from './Components/Folder';
 
 function App() {
   /*
@@ -14,11 +15,12 @@ function App() {
     inputRef => REF FOR INPUT FIELD
     textRef => REF FOR TEXTAREA
     */
-  const {isChanging, handleChanging, noteList, handleEmptiness,handleDeletion, inputRef, textRef} = useFunctionality();
-  const functionality = {isChanging, handleChanging, noteList,handleDeletion, handleEmptiness, inputRef, textRef};
+  const {isChanging, choices, noteList, inputRef, textRef, handleChanging, handleEmptiness,handleDeletion, handleChoices} = useFunctionality();
+  const functionality = {isChanging, choices, handleChanging, noteList,handleDeletion, handleEmptiness, handleChoices, inputRef, textRef};
   return (
     <>
-      <Div id="parent" cn="parent" >
+      <Div id="parent" cn="parent" clickHandler={()=>handleChoices(false, choices.files)} >
+        {choices.choice ? <Chooser functionality={functionality}></Chooser> : null}
         <Left_Container functionality={functionality} />
         <Right_Container functionality={functionality} />
       </Div>

@@ -29,8 +29,8 @@ function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
 
 function useFunctionality(){
     const initialArr = []; // INITIAL ARRAY BEING ASSIGNED TO REDUCER HOOK
-    const [folder, setFolder] = useState([])
-    const [isChanging, setIsChanging] = useState({files : true, hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :'', id : null}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
+    const [choices, setChoices] = useState({files : true, folders : false, choice : false})
+    const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :'', id : null}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
     const [noteList, dispatch] = useReducer(reducer, initialArr); // REDUCER HOOK FOR ADDITION, CHANGE & DELETION OF NOTES
     const inputRef = useRef(''); // REF FOR INPUT FIELD
     const textRef = useRef(''); // REF FOR TEXT AREA
@@ -41,7 +41,9 @@ function useFunctionality(){
             textRef.current.value = isChanging.change.txt;
         }
     }, [isChanging.change])
-
+    useEffect(()=>{
+        console.log(choices.files);
+    })
     function handleChanging(enter=false, maker=false){ // HOVER FUNCTIONALITY CHANGER
         if(!maker){ // FOR HOVER ONLY
             enter ? setIsChanging({...isChanging, hover : true}) : setIsChanging({...isChanging, hover : false});
@@ -115,10 +117,31 @@ function useFunctionality(){
         dispatch({type : "delete", taskId : taskId});
     }
 
-    function handleFolders(){
-        
+    // function handleChoices(val=true, files=true){
+    //     if(files){
+    //         setChoices({...choices, files : true})
+    //     }
+    //     else{
+    //         setChoices({...choices, files : false})
+    //         console.log(choices.files)
+    //     }
+    //     // files ? setChoices({...choices, files : true}) : (setChoices({...choices, files : false}))
+    //     if(!val){
+    //         setChoices({...choices, choice : false})
+    //     }
+    //     else{
+    //         setChoices({...choices, choice : !choices.choice})
+    //     }
+    // }
+    function handleChoices(choiceVal = true, files) {
+        setChoices(prevChoices => ({
+            ...prevChoices,
+            files: files, // Directly set based on files argument
+            choice: choiceVal ? !prevChoices.choice : false, // Update choice accordingly
+        }));
     }
-    return {isChanging, handleChanging, noteList, dispatch, handleEmptiness, handleDeletion, inputRef, textRef}
+    
+    return {isChanging, choices, handleChanging, noteList, dispatch, handleEmptiness, handleDeletion, handleChoices, inputRef, textRef}
 }
 
 export {Div, Para, Span, Input, Text, useFunctionality};

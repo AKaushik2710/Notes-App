@@ -7,11 +7,11 @@ export default function Right_Container({functionality}){
     inputRef => REF FOR INPUT FIELD
     textRef => REF FOR TEXTAREA
     */
-    const {isChanging, handleEmptiness,inputRef, textRef} = functionality;
+    const {isChanging,choices, handleEmptiness,inputRef, textRef} = functionality;
     return (
         <>
         <Div id="r_cont" cn="r_cont">
-            {(isChanging.files) ? ((isChanging.r_empty) ? (<><Div id="inp_mod" cn="inp_mod">
+            {(choices.files) ? ((isChanging.r_empty) ? (<><Div id="inp_mod" cn="inp_mod">
                 <Input cn="inp" myRef={inputRef} ></Input>
                 <Span id="saver" clickHandler={() => handleEmptiness(true, [inputRef.current.value, textRef.current.value])} >&#10003;</Span>
             </Div> 

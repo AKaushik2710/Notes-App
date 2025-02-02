@@ -6,6 +6,6 @@ export default function Div(props){
     cn => CLASSNAME FOR ELEMENT
     children => CHILD ELEMENT OR INFORMATION
     */
-    const {id, cn, children, handleChanging} = props;
-    return <div id={id} className={cn} onMouseEnter={()=>handleChanging(true)} onMouseLeave={()=> handleChanging(false)}>{children}</div>
+    const {id, cn, children, handleChanging, clickHandler} = props;
+    return <div id={id} className={cn} onClick={clickHandler} onMouseEnter={()=>handleChanging(true)} onMouseLeave={()=> handleChanging(false)}>{children}</div>
 }

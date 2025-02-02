@@ -6,24 +6,28 @@ export default function Left_Container({functionality}){
     handleChanging => HOVER MANIPULATION FUNCTION
     noteList => LIST OF NOTES BEING ADDED
     */
-    const {isChanging, handleChanging, noteList, handleDeletion, handleEmptiness } = functionality;
+    const {isChanging,choices, handleChanging, handleChoices, noteList, handleDeletion, handleEmptiness } = functionality;
     return (
         <>
         <Div id="l_cont" cn="l_cont"> {/* Left Container */}
             <Div id="presenter"> {/* Creation DIV */}
-                <Para id="hamburger">&#9776;</Para>
-                <Para>{"Notes"}</Para>{/* Note Annoter */}
-                <Span id="note_maker" handleChanging={handleChanging} >&#9998;</Span> {/* Note Making Pen */}
+                <Para id="hamburger" clickHandler={(e)=>{
+                    e.stopPropagation();
+                    handleChoices(true,choices.files);
+                    }
+                }>&#9776;</Para>
+                <Para>{choices.files ? "Notes" : "Folders"}</Para>{/* Note Annoter */}
+                <Span id="note_maker" clickHandler={()=> handleChanging(true)} handleChanging={handleChanging} >&#9998;</Span> {/* Note Making Pen */}
                 {isChanging.hover ? (<Div id="note_creator" cn="note_creator" handleChanging={handleChanging}>
-                    <Span id="file_maker" clickHandler={()=>handleChanging(false, true)} handleChanging={handleChanging}>{"New File"}</Span>
-                    <hr></hr>
-                    <Span id="folder_maker" clickHandler={()=>handleChanging(false)} handleChanging={handleChanging}>{"New Folder"}</Span>
+                    {choices.files ? (<><Span id="file_maker" clickHandler={()=>handleChanging(false, true)}>{"New File"}</Span>
+                    <hr></hr></>) : null}
+                    <Span id="folder_maker" clickHandler={()=>handleChanging(false)}>{"New Folder"}</Span>
                 </Div>) : null} {/* Displaying File Creator & Folder Creator Option */}
             </Div>
             <Div id="displayer" cn="displayer"> {/* Notes Displaying Div */}
-                {noteList.map(note=>{
+                {choices.files ? (noteList.map(note=>{
                     return <><Para cn="note" clickHandler={()=>handleEmptiness(true,note)} id={"p"+note.id}>{note.para}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleDeletion(note.id);}}>&#128465;</Span></Para></>
-                })}
+                })) : null}
             </Div>
         </Div>
         </>
