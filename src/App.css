@@ -21,6 +21,16 @@
     color: rgb(121, 0, 185);
     height: 100%;
     width: 13dvw;
+    display : flex;
+    flex-direction: column;
+}
+#chooser > p{
+    margin-top: 2.5dvh;
+    padding-left: 2dvw;
+}
+#chooser > p:hover{
+    box-shadow: 2px 5px 10px  inset rgb(121, 0, 185);
+    color: rgb(197, 143, 228);
 }
 /* Left Container */
 #l_cont{
@@ -205,3 +215,4 @@ hr{
     color: black;
     font-weight: 700;
     font-size: 2rem;
+}

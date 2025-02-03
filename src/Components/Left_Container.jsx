@@ -16,7 +16,7 @@ export default function Left_Container({functionality}){
                     handleChoices(true,choices.files);
                     }
                 }>&#9776;</Para> {/* Opening Swapper For Folders */}
-                <Para>{choices.files ? "Notes" : "Folders"}</Para>{/* Note Annoter */}
+                <Para>{choices.files ? "Notes" : "Folders"} </Para>{/* Note Annoter */}
                 <Span id="note_maker" clickHandler={()=> choices.files ? handleChanging(true) : handleFolderDisplay()} handleChanging={handleChanging} >&#9998;</Span> {/* Note Making Pen */}
                 {choices.files ? (isChanging.hover ? (<Div id="note_creator" cn="note_creator" handleChanging={handleChanging}>
                     <Span id="file_maker" clickHandler={()=>handleChanging(false, true)}>{"New File"}</Span>

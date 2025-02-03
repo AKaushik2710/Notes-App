@@ -31,6 +31,8 @@ function reducerFolder(folders, action){
     switch(action.type){
         case "add" :
             return [...folders, action.values]
+        case "delete" :
+            return folders.filter(folder => folder.id !== action.id);
     }
 }
 function useFunctionality(){
@@ -135,6 +137,11 @@ function useFunctionality(){
             dispatchFolders({type : "add", values : {id : "fold"+idFold, para : para}});
         }
     }
+
+    function handleFolderDeletion(taskId){
+        // if(taskId === choices)
+        dispatchFolders({type : "delete", id : taskId});
+    }
     function handleChoices(choiceVal = true, files) {
         setChoices(prevChoices => ({
             ...prevChoices,
@@ -143,7 +150,7 @@ function useFunctionality(){
         }));
     }
     
-    return {isChanging, choices, inputRef, textRef, noteList, folders, handleChanging, dispatch, handleEmptiness, handleDeletion, handleChoices, handleFolderDisplay}
+    return {isChanging, choices, inputRef, textRef, noteList, folders, handleChanging, dispatch, handleEmptiness, handleDeletion, handleChoices, handleFolderDisplay,handleFolderDeletion}
 }
 
 export {Div, Para, Span, Input, Text, useFunctionality};
