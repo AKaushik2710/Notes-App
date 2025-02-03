@@ -33,11 +33,18 @@ function reducerFolder(folders, action){
             return [...folders, action.values]
         case "delete" :
             return folders.filter(folder => folder.id !== action.id);
+        case "change" :
+            folders.map(folder =>{
+                if(folder.id === action.values.id){
+                    folder.para = action.values.para;
+                }
+            })
+            return folders;
     }
 }
 function useFunctionality(){
     const initialArr = []; // INITIAL ARRAY BEING ASSIGNED TO REDUCER HOOK
-    const [choices, setChoices] = useState({files : true, folders : false, choice : false});
+    const [choices, setChoices] = useState({files : true, folders : false, choice : false, change : {val : false, id : '', para : ''}});
     const [folders, dispatchFolders] = useReducer(reducerFolder, initialArr);
     const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :'', id : null}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
     const [noteList, dispatch] = useReducer(reducer, initialArr); // REDUCER HOOK FOR ADDITION, CHANGE & DELETION OF NOTES
@@ -51,8 +58,10 @@ function useFunctionality(){
         }
     }, [isChanging.change])
     useEffect(()=>{
-        console.log(choices.files);
-    })
+        if(choices.change.val){
+            inputRef.current.value = choices.change.para;
+        }
+    }, [choices.change])
     function handleChanging(enter=false, maker=false){ // HOVER FUNCTIONALITY CHANGER
         if(!maker){ // FOR HOVER ONLY
             enter ? setIsChanging({...isChanging, hover : true}) : setIsChanging({...isChanging, hover : false});
@@ -81,10 +90,10 @@ function useFunctionality(){
         let para ;
                 switch(true){
                     case (inp && txt !== '' ) :
-                        para = inp.slice(0,10);
+                        para = inp.slice(0,15);
                     break;
                     case ((inp || txt) !== '' ) :
-                        para = inp !== '' ? inp.slice(0,10) : txt.slice(0,10);
+                        para = inp !== '' ? inp.slice(0,15) : txt.slice(0,15);
                     break;
                     default : 
                         para = null;
@@ -126,23 +135,61 @@ function useFunctionality(){
         dispatch({type : "delete", taskId : taskId});
     }
     
-    function handleFolderDisplay(save=false, maker=false){
-        if(!save){
+    function handleFolderDisplay(save=false, changer=false, value){
+        if(changer){
             setIsChanging({...isChanging, r_empty : true});
+            setChoices({...choices, change : {val : true, id : value.id, para : value.para}})
         }
         else{
-            setIsChanging({...isChanging, r_empty : false});
-            const idFold = idGenerator(folders);
-            const para = paraGenerator(inputRef.current.value, '');
-            dispatchFolders({type : "add", values : {id : "fold"+idFold, para : para}});
+            if(!save){
+                setIsChanging({...isChanging, r_empty : true});
+            }
+            else{
+                setIsChanging({...isChanging, r_empty : false});
+                const idFold = idGenerator(folders);
+                const para = paraGenerator(inputRef.current.value, '');
+                if(choices.change.val){
+                    setChoices({...choices, change : {val : false, id : '', para : ''}});
+                    dispatchFolders({type : "change", values : {id : choices.change.id, para : inputRef.current.value}}) 
+                }
+                else{
+                    dispatchFolders({type : "add", values : {id : "fold"+idFold, para : para}});
+                }
+
+            }
         }
     }
 
+    // function handleFolderDisplay(save = false, changer = false, value) {
+    //     if (changer) {
+    //         setIsChanging(prev => ({ ...prev, r_empty: true }));
+    //         setChoices(prev => ({ ...prev, change: { val: true, id: value.id, para: value.para } }));
+    //     } else {
+    //         if (!save) {
+    //             setIsChanging(prev => ({ ...prev, r_empty: true }));
+    //         } else {
+    //             setIsChanging(prev => ({ ...prev, r_empty: false }));
+                
+    //             const idFold = idGenerator(folders);
+    //             const para = paraGenerator(inputRef.current.value, '');
+                
+    //             if (choices.change.val) {
+    //                 dispatchFolders({ type: "change", values: { id: choices.change.id, para: choices.change.para } });
+    //             } else {
+    //                 dispatchFolders({ type: "add", values: { id: "fold" + idFold, para: para } });
+    //             }
+                
+    //             setChoices(prev => ({ ...prev, change: { val: false, id: '', para: '' } }));
+    //         }
+    //     }
+    // }
+    
     function handleFolderDeletion(taskId){
         // if(taskId === choices)
         dispatchFolders({type : "delete", id : taskId});
     }
     function handleChoices(choiceVal = true, files) {
+        choices.files === files ? null : setIsChanging({...isChanging, r_empty : false});
         setChoices(prevChoices => ({
             ...prevChoices,
             files: files, // Directly set based on files argument

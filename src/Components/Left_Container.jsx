@@ -28,7 +28,7 @@ export default function Left_Container({functionality}){
                 {choices.files ? (noteList.map(note=>{
                     return <><Para cn="note" clickHandler={()=>handleEmptiness(true,note)} id={"p"+note.id}>{note.para}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleDeletion(note.id);}}>&#128465;</Span></Para></> // Notes Display
                 })) : (folders.map(folder => {
-                    return <><Para cn="note" id={folder.id}>{folder.para}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleFolderDeletion(folder.id);}}>&#128465;</Span></Para></> // Folders Display 
+                    return <><Para cn="note" clickHandler={()=>handleFolderDisplay(false, true, folder)} id={folder.id}>{folder.para}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleFolderDeletion(folder.id);}}>&#128465;</Span></Para></> // Folders Display 
                 }))}
             </Div>
         </Div>
