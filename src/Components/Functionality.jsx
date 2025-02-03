@@ -159,33 +159,8 @@ function useFunctionality(){
             }
         }
     }
-
-    // function handleFolderDisplay(save = false, changer = false, value) {
-    //     if (changer) {
-    //         setIsChanging(prev => ({ ...prev, r_empty: true }));
-    //         setChoices(prev => ({ ...prev, change: { val: true, id: value.id, para: value.para } }));
-    //     } else {
-    //         if (!save) {
-    //             setIsChanging(prev => ({ ...prev, r_empty: true }));
-    //         } else {
-    //             setIsChanging(prev => ({ ...prev, r_empty: false }));
-                
-    //             const idFold = idGenerator(folders);
-    //             const para = paraGenerator(inputRef.current.value, '');
-                
-    //             if (choices.change.val) {
-    //                 dispatchFolders({ type: "change", values: { id: choices.change.id, para: choices.change.para } });
-    //             } else {
-    //                 dispatchFolders({ type: "add", values: { id: "fold" + idFold, para: para } });
-    //             }
-                
-    //             setChoices(prev => ({ ...prev, change: { val: false, id: '', para: '' } }));
-    //         }
-    //     }
-    // }
     
-    function handleFolderDeletion(taskId){
-        // if(taskId === choices)
+    function handleFolderDeletion(taskId){ 
         dispatchFolders({type : "delete", id : taskId});
     }
     function handleChoices(choiceVal = true, files) {

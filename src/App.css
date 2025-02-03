@@ -1,3 +1,4 @@
+/* All Selector */
 *{
     padding: 0;
     margin: 0;
@@ -14,6 +15,7 @@
     position: relative;
 }
 
+/* Swap Between Files & Folders */
 #chooser{
     z-index: 1;
     position: absolute;
@@ -24,15 +26,20 @@
     display : flex;
     flex-direction: column;
 }
+
+/* Files & Folder Buttons */
 #chooser > p{
     margin-top: 2.5dvh;
     padding-left: 2dvw;
     cursor: pointer;
 }
+
+/* Hovering For Files & Folder */
 #chooser > p:hover{
     box-shadow: 2px 5px 10px  inset rgb(121, 0, 185);
     color: rgb(197, 143, 228);
 }
+
 /* Left Container */
 #l_cont{
     flex: 40%;
@@ -52,15 +59,18 @@
     color: rgb(51, 39, 228,0.8);
 }
 
+/* Swapper Displayer */
 #hamburger{
     margin-right: 1.5dvw;
 }
 
+/* Note Creation Pen */
 #note_maker{
     position: absolute;
     right: 1.5dvw;
     transform: rotate(90deg);
 }
+
 /* Notes List */
 #displayer{
     flex: 85%;
@@ -104,6 +114,7 @@
     position: relative;
 }
 
+/* Input Field */
 .inp{
     width: 100%;
     height: 100%;
@@ -165,29 +176,38 @@
     cursor: pointer;
 }
 
+/* Horizontal Block In Creation Pen */
 hr{
     /* color: black; */
     border: 1px solid black;
 }
+
+/* File & Folder Making Buttons */
 #file_maker, #folder_maker{
     /* border: 1px solid black; */
     padding: 0.2rem 0.4rem;
     cursor: pointer;
     /* border-radius: 10px; */
 }
+
+/* File Making Button */
 #file_maker{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
+
+/* Folder Making Button */
 #folder_maker{
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
+/* Hovering For File & Folder Creation */
 #file_maker:hover, #folder_maker:hover{
     box-shadow: 2px 4px 5px rgb(7, 3, 240);
 }
 
-
+/* Note Name Display */
 .note{
     padding: 5px;
     padding-left: 3dvw;
@@ -198,21 +218,27 @@ hr{
     cursor: pointer;
 }
 
+/* Note Name Hovering */
 .note:hover{
     color: rgb(228, 0, 125);
     box-shadow: 2px 5px 10px rgb(7, 3, 240);
 }
+
+/* Dustbin Icon */
 .dustbin{
     position: absolute;
     right: 2.5dvw;
     font-weight: 400;
     color: red;
 }
+
+/* Dustbin Hovering */
 .dustbin:hover{
     border-radius: 50%;
     text-shadow: 0px 0px red;
 }
 
+/* Saving Button */
 #saver{
     position: absolute;
     right: 1.6dvw;
