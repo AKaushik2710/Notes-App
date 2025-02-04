@@ -257,3 +257,9 @@ hr{
 #text_fol{
     border: 1px solid white;
 }
+input.note{
+    display: block;
+    background-color: inherit;
+    border: none;
+    width: 100%;
+}

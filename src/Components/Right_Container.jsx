@@ -8,6 +8,9 @@ export default function Right_Container({functionality}){
     textRef => REF FOR TEXTAREA
     */
     const {isChanging,choices,noteList,folders=[], handleEmptiness,inputRef, textRef, handleFolderDisplay, handleChoices} = functionality;
+    let f_files= [...noteList];
+    f_files.map(f => f.checked = false);
+    let check = [];
     return (
         <>
         <Div id="r_cont" cn="r_cont">
@@ -30,16 +33,19 @@ export default function Right_Container({functionality}){
                 }) */}
                 <Para id="add" clickHandler={()=> handleChoices(true, choices.files, true)}>&#43;</Para></>) : (
                     <Div>
-                        <Para>
+                        <Para cn="note">
                             <Span>
                                 &#8592;
                             </Span>
-                            <Span id="file_saver">
+                            <Span id="file_saver" clickHandler={()=>handleFileAddition(check)}> {/* file adder */}
                                 &#10003;
                             </Span>
                         </Para>
-                        {noteList.map(note=>{
-                        return <><Para cn="note">{note.para}</Para></>
+                        {f_files.map(note=>{
+                        return <Div key={note.id} cn="note">
+                        <label htmlFor={`note-${note.id}`} style={{display: 'inline-block', position : 'relative'}} >{note.para}</label>
+                        <input type="checkbox" id={`note-${note.id}`} onChange={(e)=> e.target.checked ? check.push(note.id) : check=check.filter(c=> c!==note.id)} style={{position : 'absolute', right: 0, backgroundColor : "inherit"}}/>
+                      </Div>
                         })}
                     </Div>
                 ) }

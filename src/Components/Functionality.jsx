@@ -3,7 +3,7 @@ import Div from "./Div";
 import Para from "./Para";
 import Span from "./Span";
 import { Input, Text } from "./Modifier";
-import { useReducer, useState, useRef, useEffect } from "react";
+import { useReducer, useState, useRef, useEffect, act } from "react";
 
 function reducer(noteList, action){ // REDUCER FUNCTION FOR useReducer HOOK
     switch (action.type){
@@ -44,12 +44,14 @@ function reducerFolder(folders, action){
 }
 function useFunctionality(){
     const initialArr = []; // INITIAL ARRAY BEING ASSIGNED TO REDUCER HOOK
-    const [choices, setChoices] = useState({files : true, folder_files : false, choice : false, change : {val : false, id : '', para : ''}});
+    const [choices, setChoices] = useState({files : true, folder_files : false, choice : false, change : {val : false, id : '', para : '', files : []}});
     const [folders, dispatchFolders] = useReducer(reducerFolder, initialArr);
+    const [folder_files, setFolderFiles] = useState([])
     const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :'', id : null}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
     const [noteList, dispatch] = useReducer(reducer, initialArr); // REDUCER HOOK FOR ADDITION, CHANGE & DELETION OF NOTES
     const inputRef = useRef(''); // REF FOR INPUT FIELD
     const textRef = useRef(''); // REF FOR TEXT AREA
+    let files;
     // let vg;
     useEffect(()=>{
         if(isChanging.change.val){
@@ -74,16 +76,8 @@ function useFunctionality(){
 
     function idGenerator(notes){ // NOTE'S ID GENERATOR
         const arr = [...notes];
-        function isEmpty(){
-            let result = '';
-            for(let r=0; r<=arr.length; r++){
-                result = arr[r+1] - arr[r] === 1 ? arr[r] : NaN
-            }
-            return result;
-        }
-        let prev = isEmpty();
-        const na = arr.length ===0 ? 1 : arr[arr.length-1].id+1 ;
-        return Object.is(prev,NaN) ? na : prev+=1
+        const result = arr.length !== 0 ? arr[arr.length -1].id + 1 : 1
+        return result;
     }
 
     function paraGenerator(inp, txt){ // GENERATING NOTES ENTRY FOR DISPLAY
@@ -138,30 +132,38 @@ function useFunctionality(){
     function handleFolderDisplay(save=false, changer=false, value){
         if(changer){
             setIsChanging({...isChanging, r_empty : true});
-            setChoices({...choices, change : {val : true, id : value.id, para : value.para}})
+            setChoices({...choices, change : {val : true, id : value.id, para : value.para, files : [value.folder_files]}})
         }
         else{
             if(!save){
+                const idFold = idGenerator(folders);
                 setIsChanging({...isChanging, r_empty : true});
+                setChoices({...choices, change : {val : false, id : idFold, para :  ''}})
             }
             else{
                 setIsChanging({...isChanging, r_empty : false});
-                const idFold = idGenerator(folders);
                 const para = paraGenerator(inputRef.current.value, '');
                 if(choices.change.val){
                     setChoices({...choices, change : {val : false, id : '', para : ''}});
                     dispatchFolders({type : "change", values : {id : choices.change.id, para : inputRef.current.value}}) 
                 }
                 else{
-                    dispatchFolders({type : "add", values : {id : "fold"+idFold, para : para}});
+                    dispatchFolders({type : "add", values : {id : "fold"+choices.change.id, para : para, files : files}});
                 }
 
             }
         }
     }
     
-    function handleFileAddition(){
-        
+    function handleFileAddition(check){
+        check.map(c => {
+            noteList.map(note=>{
+                if(note.id === c){
+                    files.push(note);
+                }
+            })
+        })
+
     }
     function handleFolderDeletion(taskId){ 
         dispatchFolders({type : "delete", id : taskId});
