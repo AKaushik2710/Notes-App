@@ -44,7 +44,7 @@ function reducerFolder(folders, action){
 }
 function useFunctionality(){
     const initialArr = []; // INITIAL ARRAY BEING ASSIGNED TO REDUCER HOOK
-    const [choices, setChoices] = useState({files : true, folders : false, choice : false, change : {val : false, id : '', para : ''}});
+    const [choices, setChoices] = useState({files : true, folder_files : false, choice : false, change : {val : false, id : '', para : ''}});
     const [folders, dispatchFolders] = useReducer(reducerFolder, initialArr);
     const [isChanging, setIsChanging] = useState({hover : false, r_empty : false, add : false, change :  {val : false, inp: '', txt :'', id : null}}); // STATE FOR HOVERING, RIGHT CONTAINER'S CHILDREN DISPLAY & NEW NOTE ADDITION FUNCTIONALITY
     const [noteList, dispatch] = useReducer(reducer, initialArr); // REDUCER HOOK FOR ADDITION, CHANGE & DELETION OF NOTES
@@ -160,16 +160,24 @@ function useFunctionality(){
         }
     }
     
+    function handleFileAddition(){
+        
+    }
     function handleFolderDeletion(taskId){ 
         dispatchFolders({type : "delete", id : taskId});
     }
-    function handleChoices(choiceVal = true, files) {
+    function handleChoices(choiceVal = true, files=choices.files, adder=false) {
+        if(!adder){
         choices.files === files ? null : setIsChanging({...isChanging, r_empty : false});
         setChoices(prevChoices => ({
             ...prevChoices,
             files: files, // Directly set based on files argument
             choice: choiceVal ? !prevChoices.choice : false, // Update choice accordingly
         }));
+        }
+        else{
+            setChoices({...choices, folder_files : adder})
+        }
     }
     
     return {isChanging, choices, inputRef, textRef, noteList, folders, handleChanging, dispatch, handleEmptiness, handleDeletion, handleChoices, handleFolderDisplay,handleFolderDeletion}

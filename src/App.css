@@ -247,3 +247,13 @@ hr{
     font-weight: 700;
     font-size: 2rem;
 }
+
+#add{
+    font-size: 2.5rem;
+    font-weight: 700;
+    border: 1px solid red;
+}
+
+#text_fol{
+    border: 1px solid white;
+}
