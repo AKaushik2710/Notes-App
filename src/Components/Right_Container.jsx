@@ -7,10 +7,9 @@ export default function Right_Container({functionality}){
     inputRef => REF FOR INPUT FIELD
     textRef => REF FOR TEXTAREA
     */
-    const {isChanging,choices,noteList,folders=[], handleEmptiness,inputRef, textRef, handleFolderDisplay, handleChoices} = functionality;
-    let f_files= [...noteList];
-    f_files.map(f => f.checked = false);
-    let check = [];
+    const {isChanging,choices,noteList,folders=[],folder_files, handleEmptiness,inputRef, textRef, handleFolderDisplay, handleChoices,handleFileAddition} = functionality;
+    // let f_files= [...noteList];
+    // f_files.map(f => f.checked = false);
     return (
         <>
         <Div id="r_cont" cn="r_cont">
@@ -26,26 +25,25 @@ export default function Right_Container({functionality}){
             <Span id="saver" clickHandler={() => handleFolderDisplay(true)} >&#10003;</Span>
             </Div>
             <Div id="text_fol" cn="text_mod">{/* Folderated Notes Display */}
-                {!choices.folder_files ?(<>{/*folders.map(folder =>{
+                {!choices.folder_files ?(<> {/*folders.map(folder =>{
                     folder.files.map(file =>{
                         return <Para id={folder.id} cn="note" key={folder.id}>{file}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleFolderDeletion(folder.id);}}>&#128465;</Span></ Para>
                     })
-                }) */}
-                <Para id="add" clickHandler={()=> handleChoices(true, choices.files, true)}>&#43;</Para></>) : (
+                })*/}
+                <Para id="add" clickHandler={()=> handleFileAddition({type : "display", val : true})}>&#43;</Para></>) : (
                     <Div>
                         <Para cn="note">
                             <Span>
                                 &#8592;
                             </Span>
-                            <Span id="file_saver" clickHandler={()=>handleFileAddition(check)}> {/* file adder */}
+                            <Span id="file_saver" clickHandler={()=>handleFileAddition({type : "save", val :false})}> {/* file adder */}
                                 &#10003;
                             </Span>
                         </Para>
-                        {f_files.map(note=>{
-                        return <Div key={note.id} cn="note">
-                        <label htmlFor={`note-${note.id}`} style={{display: 'inline-block', position : 'relative'}} >{note.para}</label>
-                        <input type="checkbox" id={`note-${note.id}`} onChange={(e)=> e.target.checked ? check.push(note.id) : check=check.filter(c=> c!==note.id)} style={{position : 'absolute', right: 0, backgroundColor : "inherit"}}/>
-                      </Div>
+                        {folder_files.map(note=>{
+                        return <>
+                        <label htmlFor={`note-${note.id}`} className='note' style={{display: 'block', position : 'relative'}} >{note.para}<input type="checkbox" id={`note-${note.id}`} onChange={(e)=> handleFileAddition({type : "add", val : {id : note.id, check : e.target.checked}})} style={{position : 'absolute', right: 0, backgroundColor : "inherit"}}/></label>
+                      </>
                         })}
                     </Div>
                 ) }
