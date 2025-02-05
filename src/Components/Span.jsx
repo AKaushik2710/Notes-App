@@ -6,6 +6,6 @@ export default function Span(props){
     handleChanging => HOVER FUNCTIONALITY
     clickHandler => CLICK FUNTIONALITY
     */
-    const {id, children, cn, handleChanging, clickHandler} = props;
-    return <span id={id} className={cn} onClick={clickHandler} onMouseEnter={()=>handleChanging(true)} onMouseLeave={()=> handleChanging(false)}>{children}</span>
+    const {id, children, cn, handleOnChanging, handleOffChanging, clickHandler} = props;
+    return <span id={id} className={cn} onClick={clickHandler} onMouseEnter={handleOnChanging} onMouseLeave={handleOffChanging}>{children}</span>
 }

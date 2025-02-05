@@ -25,11 +25,11 @@ export default function Right_Container({functionality}){
             <Span id="saver" clickHandler={() => handleFolderDisplay(true)} >&#10003;</Span>
             </Div>
             <Div id="text_fol" cn="text_mod">{/* Folderated Notes Display */}
-                {!choices.folder_files ?(<> {/*folders.map(folder =>{
+                {!choices.folder_files ?(<> {folders.map(folder =>{
                     folder.files.map(file =>{
                         return <Para id={folder.id} cn="note" key={folder.id}>{file}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleFolderDeletion(folder.id);}}>&#128465;</Span></ Para>
                     })
-                })*/}
+                })}
                 <Para id="add" clickHandler={()=> handleFileAddition({type : "display", val : true})}>&#43;</Para></>) : (
                     <Div>
                         <Para cn="note">
@@ -42,7 +42,7 @@ export default function Right_Container({functionality}){
                         </Para>
                         {folder_files.map(note=>{
                         return <>
-                        <label htmlFor={`note-${note.id}`} className='note' style={{display: 'block', position : 'relative'}} >{note.para}<input type="checkbox" id={`note-${note.id}`} onChange={(e)=> handleFileAddition({type : "add", val : {id : note.id, check : e.target.checked}})} style={{position : 'absolute', right: 0, backgroundColor : "inherit"}}/></label>
+                        <label htmlFor={`note-${note.id}`} className='note' style={{display: 'block', position : 'relative'}} >{note.para}<input type="checkbox" checked={note.checked} id={`note-${note.id}`} onChange={(e)=> handleFileAddition({type : "add", val : {id : note.id, check : e.target.checked}})} style={{position : 'absolute', right: 0, backgroundColor : "inherit"}}/></label>
                       </>
                         })}
                     </Div>

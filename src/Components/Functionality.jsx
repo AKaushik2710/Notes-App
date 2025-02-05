@@ -60,6 +60,7 @@ function useFunctionality(){
     const textRef = useRef(''); // REF FOR TEXT AREA
     let files;
     // let vg;
+    useEffect(()=>{console.log(folder_files)})
     useEffect(()=>{
         if(isChanging.change.val){
             inputRef.current.value = isChanging.change.inp;
@@ -170,16 +171,25 @@ function useFunctionality(){
             case "add" :
                 // const folderId = obj.val.id;
                 // const check = obj.val.check;
-                console.log("okhyui")
-                setFolderFiles(folder_files.map(file =>{
-                    if(file.id === obj.val.id){
-                        console.log("got it",file.checked)
-                        return {...file, checked : obj.val.check};
-                    }else{
-                        return file;
+                // console.log("okhyui")
+                // setFolderFiles(folder_files.map(file =>{
+                //     if(file.id === obj.val.id){
+                //         console.log("got it",file.checked)
+                //         return {...file, checked : obj.val.check};
+                //     }else{
+                //         return file;
+                //     }
+                // }))
+                // break;
+                setFolderFiles(prevFolderFiles => prevFolderFiles.map(file => {
+                    if (file.id === obj.val.id) {
+                      console.log("got it", file.checked);
+                      return { ...file, checked: obj.val.check };
+                    } else {
+                      return file;
                     }
-                }))
-                break;
+                  }));
+                  break;
             case "save" : 
                 setChoices({...choices, folder_files : obj.val})
                 dispatchFolders({type : "file_change", id : choices.change.id, files : folder_files.filter(file=> file.checked)});
