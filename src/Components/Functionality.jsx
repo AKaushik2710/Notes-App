@@ -60,7 +60,7 @@ function useFunctionality(){
     const textRef = useRef(''); // REF FOR TEXT AREA
     let files;
     // let vg;
-    useEffect(()=>{console.log(folder_files)})
+    useEffect(()=>{console.log(folder_files, choices.change, folder_files.filter(file=> file.checked))},[folder_files])
     useEffect(()=>{
         if(isChanging.change.val){
             inputRef.current.value = isChanging.change.inp;
@@ -169,22 +169,15 @@ function useFunctionality(){
                 setChoices({...choices, folder_files : obj.val})
                 break;
             case "add" :
-                // const folderId = obj.val.id;
-                // const check = obj.val.check;
-                // console.log("okhyui")
-                // setFolderFiles(folder_files.map(file =>{
-                //     if(file.id === obj.val.id){
-                //         console.log("got it",file.checked)
-                //         return {...file, checked : obj.val.check};
-                //     }else{
-                //         return file;
-                //     }
-                // }))
-                // break;
                 setFolderFiles(prevFolderFiles => prevFolderFiles.map(file => {
                     if (file.id === obj.val.id) {
-                      console.log("got it", file.checked);
-                      return { ...file, checked: obj.val.check };
+                      console.log("got it", file.checked, obj.val.check);
+                      try{
+                        return { ...file, checked: obj.val.check };
+                      }
+                      catch{
+                        console.log("Error")
+                      }
                     } else {
                       return file;
                     }
@@ -192,8 +185,10 @@ function useFunctionality(){
                   break;
             case "save" : 
                 setChoices({...choices, folder_files : obj.val})
-                dispatchFolders({type : "file_change", id : choices.change.id, files : folder_files.filter(file=> file.checked)});
-                setFolderFiles(folder_files.map(file => {return {...file, checked : false }}))
+                if(choices.change.val){
+                    dispatchFolders({type : "file_change", id : choices.change.id, files : folder_files.filter(file=> file.checked)});
+                    setFolderFiles(folder_files.map(file => {return {...file, checked : false }}))
+                }
         }
     }
     function handleFolderDeletion(taskId){ 

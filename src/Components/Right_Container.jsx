@@ -25,15 +25,19 @@ export default function Right_Container({functionality}){
             <Span id="saver" clickHandler={() => handleFolderDisplay(true)} >&#10003;</Span>
             </Div>
             <Div id="text_fol" cn="text_mod">{/* Folderated Notes Display */}
-                {!choices.folder_files ?(<> {folders.map(folder =>{
+                {!choices.folder_files ?(choices.change.val ? (<> {folders.map(folder =>{
                     folder.files.map(file =>{
                         return <Para id={folder.id} cn="note" key={folder.id}>{file}<Span cn="dustbin" clickHandler={(e)=>{e.stopPropagation();handleFolderDeletion(folder.id);}}>&#128465;</Span></ Para>
                     })
                 })}
-                <Para id="add" clickHandler={()=> handleFileAddition({type : "display", val : true})}>&#43;</Para></>) : (
+                <Para id="add" clickHandler={()=> handleFileAddition({type : "display", val : true})}>&#43;</Para></>):(folder_files.map(file => {
+                    if(file.checked){
+                        return <Para id={file.id} key={file.id}>{file.para}</Para>
+                    }
+                }))) : (
                     <Div>
                         <Para cn="note">
-                            <Span>
+                            <Span clickHandler={()=>{handleFileAddition({type : "back", val : true})}}>
                                 &#8592;
                             </Span>
                             <Span id="file_saver" clickHandler={()=>handleFileAddition({type : "save", val :false})}> {/* file adder */}
